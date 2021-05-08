@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class CorsoDAO {
 	 */
 	public List<Corso> getTuttiICorsi() {
 
-		final String sql = "SELECT * FROM corso";
+		String sql = "SELECT * FROM corso";
 
 		List<Corso> corsi = new LinkedList<Corso>();
 
@@ -36,8 +37,8 @@ public class CorsoDAO {
 
 				System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
 
-				// Crea un nuovo JAVA Bean Corso
-				// Aggiungi il nuovo oggetto Corso alla lista corsi
+				Corso c = new Corso(codins,numeroCrediti, nome, periodoDidattico);
+				corsi.add(c);
 			}
 
 			conn.close();
@@ -62,8 +63,40 @@ public class CorsoDAO {
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso) {
-		// TODO
+	public List<Studente> getStudentiIscrittiAlCorso(Corso corso) {
+
+		String sql = "SELECT s.matricola, s.cognome, s.nome, s.CDS "
+				+ "FROM iscrizione i, studente s "
+				+ "WHERE s.matricola=i.matricola AND i.codins = ?";
+		
+		List<Studente> result = new ArrayList<>();
+		
+		Connection conn;
+		
+		try {
+			
+			conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, corso.getCodIns());
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				// ovviamente conta ordine del costruttore e non della query! quindi prima nome poi cognome
+				Studente s = new Studente(rs.getInt("matricola"), rs.getString("cognome"), rs.getString("nome"),
+						rs.getString("CDS"));
+				
+				result.add(s);
+				
+			}
+			
+			conn.close();
+			return result;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException("Database error in getStudentiByCorso", e);
+		}
+		
 	}
 
 	/*
