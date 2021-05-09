@@ -77,7 +77,7 @@
                         <Insets left="50.0" right="300.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCerca" mnemonicParsing="false" onAction="#doCerca" prefHeight="25.0" prefWidth="88.0" text="Cerca" />
+                  <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" prefHeight="25.0" prefWidth="88.0" text="Iscrivi" />
                </children>
             </HBox>
             <TextArea fx:id="txtResult" editable="false" prefHeight="148.0" prefWidth="560.0">

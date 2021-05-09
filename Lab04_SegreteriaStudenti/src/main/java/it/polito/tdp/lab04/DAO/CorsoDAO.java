@@ -48,7 +48,7 @@ public class CorsoDAO {
 
 		} catch (SQLException e) {
 			// e.printStackTrace();
-			throw new RuntimeException("Errore Db", e);
+			throw new RuntimeException("Errore Db in getTuttiICorsi", e);
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class CorsoDAO {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Database error in getStudentiByCorso", e);
+			throw new RuntimeException("Database error in getStudentiIscrittiAlCorso", e);
 		}
 		
 	}
@@ -102,10 +102,28 @@ public class CorsoDAO {
 	/*
 	 * Data una matricola ed il codice insegnamento, iscrivi lo studente al corso.
 	 */
-	public boolean inscriviStudenteACorso(Studente studente, Corso corso) {
-		// TODO
-		// ritorna true se l'iscrizione e' avvenuta con successo
-		return false;
+	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
+		
+		String sql = "INSERT IGNORE INTO `iscritticorsi`.`iscrizione` (`matricola`, `codins`) VALUES(?,?)";
+		
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, studente.getMatricola());
+			st.setString(2, corso.getCodIns());
+			
+			int res = st.executeUpdate();	
+
+			if (res == 1) {
+				conn.close();
+				return true;
+			}
+			conn.close();
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db in iscriviStudenteACorso", e);
+		}
 	}
 
 }

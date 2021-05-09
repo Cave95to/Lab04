@@ -37,7 +37,7 @@ public class StudenteDAO {
 			return s;
 			
 		}catch(SQLException e) {
-			throw new RuntimeException("Database error in getCorsiByPeriodo", e);
+			throw new RuntimeException("Database error in getStudente", e);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class StudenteDAO {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Database error in getStudentiByCorso", e);
+			throw new RuntimeException("Database error in getCorsiStudente", e);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class StudenteDAO {
 			return false;
 			
 		}catch(SQLException e) {
-			throw new RuntimeException("Database error in getCorsiByPeriodo", e);
+			throw new RuntimeException("Database error in isStudenteIscrittoCorso", e);
 		}
 	}
 

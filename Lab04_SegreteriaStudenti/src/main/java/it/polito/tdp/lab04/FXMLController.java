@@ -58,7 +58,7 @@ public class FXMLController {
     private Button btnCercaCorsi;
 
     @FXML
-    private Button btnCerca;
+    private Button btnIscrivi;
 
     @FXML
     private TextArea txtResult;
@@ -180,7 +180,7 @@ public class FXMLController {
     }
 
     @FXML
-    void doCerca(ActionEvent event) {
+    void doIscrivi(ActionEvent event) {
     	
     	this.txtResult.clear();
     	this.txtCognome.clear();
@@ -212,9 +212,13 @@ public class FXMLController {
     		if(this.model.isStudenteIscrittoCorso(s,c)) {
     			this.txtResult.setText("Studente già iscritto al corso");
     		}
-    		else
-    			this.txtResult.setText("Studente non iscritto al corso");
-    		
+    		else {
+    			
+    			if(this.model.iscriviStudenteACorso(s,c))
+    				this.txtResult.setText("Studente iscritto correttamente al corso");
+    			else
+    				this.txtResult.setText("Errore iscrizione al corso");
+    		}
     		
     	}catch(NumberFormatException e) {
     		this.txtResult.setText("La matricola deve essere numerica");
@@ -241,7 +245,7 @@ public class FXMLController {
         assert txtNome != null : "fx:id=\"txtNome\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtCognome != null : "fx:id=\"txtCognome\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnCercaCorsi != null : "fx:id=\"btnCerca\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnCerca != null : "fx:id=\"btnIscrivi\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnIscrivi != null : "fx:id=\"btnIscrivi\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Scene.fxml'.";
 
